@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Marker, Popup } from "react-leaflet";
 import { LogoLocalizacion } from "./LogoLocalizacion";
 import { LogoHome } from "./LogoHome";
 import comercios from "../assets/data";
 import fetchData from "../utils/fetchData";
 
-// const url = "http://127.0.0.1:7000";
-const url = process.env.REACT_APP_URL_LOCALIZACION;
+const url = "http://127.0.0.1:7000";
+/* const url = process.env.REACT_APP_URL_LOCALIZACION; */
 const Markers = () => {
   /*  const comercios2 = [
     {
@@ -56,11 +56,29 @@ const Markers = () => {
   const [latitudAbajo, setLatitudAbajo] = useState("");
   const [longitudArriba, setLongitudArriba] = useState("");
   const [longitudAbajo, setLongitudAbajo] = useState("");
+
+  const markerRef = useRef(null);
+  const eventHandlers = useMemo(
+    () => ({
+      dragend() {
+        const marker = markerRef.current;
+        if (marker != null) {
+          console.log(marker.getLatLng().lat);
+          // setUbicacion(marker.getLatLng());
+          setUbicacion({
+            longitude: marker.getLatLng().lng,
+            latitude: marker.getLatLng().lat,
+          });
+        }
+      },
+    }),
+    []
+  );
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       function (position) {
-        /*           console.log(position.coords.longitude);
-          console.log(position.coords.latitude); */
+        console.log(position.coords.longitude);
+        console.log(position.coords.latitude);
         setUbicacion({
           longitude: position.coords.longitude,
           latitude: position.coords.latitude,
@@ -129,7 +147,10 @@ const Markers = () => {
               lat: ubicacion.latitude,
               lng: ubicacion.longitude,
             }}
+            draggable={true}
             icon={LogoHome}
+            eventHandlers={eventHandlers}
+            ref={markerRef}
           >
             <Popup>Tú estas aqui !!</Popup>
           </Marker>
