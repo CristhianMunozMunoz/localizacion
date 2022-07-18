@@ -5,8 +5,8 @@ import { LogoHome } from "./LogoHome";
 import comercios from "../assets/data";
 import fetchData from "../utils/fetchData";
 
-const url = "http://127.0.0.1:7000";
-/* const url = process.env.REACT_APP_URL_LOCALIZACION; */
+/* const url = "http://127.0.0.1:7000"; */
+const url = process.env.REACT_APP_URL_LOCALIZACION;
 const Markers = () => {
   /*  const comercios2 = [
     {
@@ -63,7 +63,7 @@ const Markers = () => {
       dragend() {
         const marker = markerRef.current;
         if (marker != null) {
-          console.log(marker.getLatLng().lat);
+          /* console.log(marker.getLatLng().lat); */
           // setUbicacion(marker.getLatLng());
           setUbicacion({
             longitude: marker.getLatLng().lng,
@@ -77,8 +77,8 @@ const Markers = () => {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       function (position) {
-        console.log(position.coords.longitude);
-        console.log(position.coords.latitude);
+        /* console.log(position.coords.longitude);
+        console.log(position.coords.latitude); */
         setUbicacion({
           longitude: position.coords.longitude,
           latitude: position.coords.latitude,
@@ -122,7 +122,7 @@ const Markers = () => {
     filtrarDatos();
   }, [ubicacion]); */
 
-  useEffect(() => {
+  /*   useEffect(() => {
     if (ubicacion.latitude !== 0 && ubicacion.longitude !== 0) {
       const latitudArriba = ubicacion.latitude + 0.009;
       const latitudAbajo = ubicacion.latitude - 0.009;
@@ -133,6 +133,21 @@ const Markers = () => {
         "GET"
       ).then((res) => {
         // console.log("resultados fetch", res.obj.results);
+        setUbicacionCercana(res.obj.results);
+      });
+    }
+  }, [ubicacion]); */
+  useEffect(() => {
+    if (ubicacion.latitude !== 0 && ubicacion.longitude !== 0) {
+      /*       const latitudArriba = ubicacion.latitude + 0.009;
+      const latitudAbajo = ubicacion.latitude - 0.009;
+      const longitudArriba = ubicacion.longitude + 0.009;
+      const longitudAbajo = ubicacion.longitude - 0.009; */
+      fetchData(
+        `${url}/rangos?longitud_inicio=${ubicacion.longitude}&latitud_inicio=${ubicacion.latitude}`,
+        "GET"
+      ).then((res) => {
+        /*  console.log("resultados fetch", res); */
         setUbicacionCercana(res.obj.results);
       });
     }
