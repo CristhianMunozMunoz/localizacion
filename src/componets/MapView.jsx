@@ -40,7 +40,7 @@ const MapView = () => {
             lat: ubicacion.latitude,
             lng: ubicacion.longitude,
           }}
-          zoom={15}
+          zoom={16}
           /*    scrollWheelZoom={true} */
           style={{ width: "100vw", height: "100vh" }}
         >
