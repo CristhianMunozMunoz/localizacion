@@ -1,0 +1,214 @@
+.sliderVertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 350px;
+  width: 100%;
+  background: white;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1),
+    0 0 10px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1);
+  align-items: center;
+}
+
+.sliderVertical::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.sliderVertical::-webkit-scrollbar:vertical {
+  width: 7px;
+}
+
+.sliderVertical::-webkit-scrollbar-button:increment,
+.sliderVertical::-webkit-scrollbar-button {
+  display: none;
+}
+
+.sliderVertical::-webkit-scrollbar-thumb {
+  background-color: rgba(169, 169, 169, 0.536);
+  border-radius: 20px;
+  border: 1px solid #f1f2f3;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  height: 83px;
+  width: 90%;
+  margin-bottom: 2px;
+  margin-top: 5px;
+  padding: 12px;
+  background-color: #ffffff;
+  /* background: red; */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.card:hover {
+  background-color: #ffb18dfd;
+}
+
+.cardInfo {
+  /* background-color: blue; */
+  display: grid;
+  grid-template-areas:
+    "header sidebar sidebar"
+    "header sidebar sidebar"
+    "header main main";
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto auto;
+  grid-gap: 7px;
+  height: 40px;
+  /* margin-bottom: 380px; */
+  align-items: center;
+}
+.header {
+  grid-area: header;
+  /* background-color: #f2f2f2; */
+  padding: 10px;
+}
+
+.image {
+  grid-area: header;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: url("/src/assets/puntospdp.png") center no-repeat;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.2);
+  /* Aplicar escala */
+  transform: scale(1.05);
+}
+.cardInfo h3 {
+  grid-area: sidebar;
+  margin: 0;
+  font-size: 15px;
+
+  color: #ef4935;
+}
+
+.cardInfo p {
+  grid-area: main;
+  margin: 0;
+  font-size: 13px;
+  color: #666666;
+}
+
+.noDataMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.noDataMessage h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  /* color: #333333; */
+  color: #ef4935;
+}
+
+.noDataMessage p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #666666;
+}
+
+.noDataImage {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.2);
+  animation: spin 8s linear infinite;
+  transform-style: preserve-3d;
+  perspective: 800px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(-360deg);
+  }
+}
+
+.world {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: url("/src/assets/mapaMundo.png");
+  background-size: cover;
+  box-shadow: inset 0 0 20px #000, inset -40px -10px 20px rgba(3, 32, 56, 0.7);
+  animation: world 30s linear infinite;
+}
+
+@keyframes world {
+  0% {
+    background-position-x: 0;
+  }
+
+  100% {
+    background-position-x: -1500px;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  /* margin-bottom: 10px; */
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 15px 15px;
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:hover {
+  background-color: #ddd;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination button.prev {
+  background: url("/src/assets/arrowLeft.png");
+}
+
+.pagination button.next {
+  background: url("/src/assets/arrowRight.png");
+}
+.numeroPaginacion {
+  color: #06060671;
+}
+/* @media (min-width: 1193px) { */
+@media (min-width: 1179px) {
+  .sliderVertical {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    height: 380px;
+    width: 100%;
+    background: white;
+    /* overflow-y: scroll; */
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1),
+      0 0 10px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
+  }
+}

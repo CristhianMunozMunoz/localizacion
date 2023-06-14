@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { useEffect, useState } from "react";
+import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import Markers from "./Markers";
-import { LogoLocalizacion } from "./LogoLocalizacion";
-import comercios from "../assets/data";
+import SliderVertical from "./sliderVertical/SliderVertical";
+import Classes from "./MapViews.module.css";
 const MapView = () => {
+  const { gridContainerMapa, ContenedorSlide, ContenedorMapa, mapa } = Classes;
   const position = [0, 0];
+  const [datos, setDatos] = useState([]);
 
+  const recibirDatos = (data) => {
+    setDatos(data);
+  };
   const [ubicacion, setUbicacion] = useState({
     latitude: 0,
     longitude: 0,
@@ -14,8 +19,6 @@ const MapView = () => {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       function (position) {
-        /*         console.log(position.coords.longitude);
-        console.log(position.coords.latitude); */
         setUbicacion({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -35,22 +38,27 @@ const MapView = () => {
   return (
     <div>
       {ubicacion.latitude != 0 && ubicacion.longitude != 0 ? (
-        <MapContainer
-          center={{
-            lat: ubicacion.latitude,
-            lng: ubicacion.longitude,
-          }}
-          zoom={15}
-          /*    scrollWheelZoom={true} */
-          style={{ width: "100vw", height: "100vh" }}
-        >
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-
-          <Markers></Markers>
-        </MapContainer>
+        <div className={gridContainerMapa}>
+          <div className={ContenedorSlide}>
+            <SliderVertical data={datos}></SliderVertical>
+          </div>
+          <div className={ContenedorMapa}>
+            <MapContainer
+              className={mapa}
+              center={{
+                lat: ubicacion.latitude,
+                lng: ubicacion.longitude,
+              }}
+              zoom={15}
+            >
+              <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <Markers datos={datos} enviarDatos={recibirDatos}></Markers>
+            </MapContainer>
+          </div>
+        </div>
       ) : (
         ""
       )}

@@ -1,0 +1,59 @@
+.gridContainerMapa {
+  display: grid;
+  justify-content: center;
+  grid-template-areas:
+    "slide slide slide"
+    "mapa mapa mapa";
+  grid-template-columns: auto 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  grid-gap: 5px;
+  height: 100%;
+  margin-top: 10px;
+  justify-items: center;
+  width: 100%;
+}
+.ContenedorSlide {
+  grid-area: slide;
+  /* background-color: red; */
+  width: 95%;
+}
+
+.ContenedorMapa {
+  grid-area: mapa;
+  margin-bottom: 20px;
+  /* background-color: green; */
+  width: 95%;
+  height: 350px;
+}
+.mapa {
+  width: 100%;
+  height: 100%;
+}
+@media (min-width: 1179px) {
+  .gridContainerMapa {
+    display: grid;
+    grid-template-areas:
+      "slide  mapa mapa "
+      "slide  mapa mapa ";
+    grid-template-columns: auto 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    height: 100%;
+    width: 100%;
+    justify-items: center;
+  }
+  .ContenedorSlide {
+    grid-area: slide;
+    /* background-color: blue; */
+    width: 97%;
+    min-width: 501px;
+    height: 380px;
+    margin-left: 10px;
+  }
+  .ContenedorMapa {
+    grid-area: mapa;
+    /* background-color: green; */
+    width: 100%;
+    height: 380px;
+    /* padding: 10px; */
+  }
+}
