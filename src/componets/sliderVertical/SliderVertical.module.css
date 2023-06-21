@@ -196,7 +196,7 @@
   color: #06060671;
 }
 /* @media (min-width: 1193px) { */
-@media (min-width: 1179px) {
+@media (min-width: 1000px) {
   .sliderVertical {
     display: flex;
     flex-direction: column;
