@@ -85,8 +85,8 @@
   grid-area: sidebar;
   margin: 0;
   font-size: 15px;
-
-  color: #ef4935;
+font-weight: 600;
+  color: #4559A4;
 }
 
 .cardInfo p {
@@ -209,7 +209,8 @@ button {
 
 /* Estilo para el botón seleccionado */
 button.seleccionado {
-  background-color: #ff0000;
+  background-color: #4559a4;
+ 
   color: #fff;
 }
 /* @media (min-width: 1193px) { */

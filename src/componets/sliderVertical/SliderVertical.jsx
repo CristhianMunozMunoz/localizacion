@@ -94,12 +94,14 @@ const SliderVertical = ({ data, onOpcionSeleccionada }) => {
             className={prev}
             onClick={prevPage}
             disabled={currentPage === 1}
+            aria-label="Página anterior"
           ></button>
           <span className={numeroPaginacion}>{currentPage}</span>
           <button
             className={next}
             onClick={nextPage}
             disabled={currentPage === totalPages}
+            aria-label="Página siguiente"
           ></button>
         </div>
       )}
