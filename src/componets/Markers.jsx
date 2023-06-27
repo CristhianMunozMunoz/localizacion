@@ -5,7 +5,6 @@ import { Marker, Popup } from "react-leaflet";
 import { LogoLocalizacion } from "./LogoLocalizacion";
 
 const url = process.env.REACT_APP_URL_LOCALIZACION;
-const url2 = process.env.REACT_APP_BASE_API_CERT;
 const Markers = (props) => {
   console.log("este es la opcion", props?.opcionSeleccionada);
   const [ubicacion, setUbicacion] = useState({
@@ -56,7 +55,7 @@ const Markers = (props) => {
       props?.opcionSeleccionada === "retiroSubsidio"
     ) {
       fetchData(
-        `${url2}/img/rangos?longitud_inicio=${ubicacion?.longitude}&latitud_inicio=${ubicacion?.latitude}`,
+        `${url}/img/rangos?longitud_inicio=${ubicacion?.longitude}&latitud_inicio=${ubicacion?.latitude}`,
         "GET"
       ).then((res) => {
         console.log("img", res?.obj?.results);
@@ -68,7 +67,7 @@ const Markers = (props) => {
       props?.opcionSeleccionada === "puntosPago"
     ) {
       fetchData(
-        `${url2}/rangos?longitud_inicio=${ubicacion?.longitude}&latitud_inicio=${ubicacion?.latitude}`,
+        `${url}/rangos?longitud_inicio=${ubicacion?.longitude}&latitud_inicio=${ubicacion?.latitude}`,
         "GET"
       ).then((res) => {
         console.log("rangos", res?.obj?.results);
