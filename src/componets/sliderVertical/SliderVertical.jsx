@@ -1,6 +1,6 @@
 import Classes from "./SliderVertical.module.css";
 import { useState } from "react";
-const SliderVertical = ({ data }) => {
+const SliderVertical = ({ data, onOpcionSeleccionada }) => {
   // import moverCursorImage from "../../assets/moverPuntos.png";
   const {
     cardInfo,
@@ -14,11 +14,18 @@ const SliderVertical = ({ data }) => {
     prev,
     numeroPaginacion,
     world,
+    contendorBotones,
+    seleccionado,
   } = Classes;
-
 
   const itemsPerPage = 3; // Número de comercios por página
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [opcionSeleccionada, setOpcionSeleccionada] = useState("puntosPago");
+  const handleSeleccionarOpcion = (opcion) => {
+    setOpcionSeleccionada(opcion);
+    onOpcionSeleccionada(opcion);
+  };
 
   // Calcular el índice inicial y final de los comercios para la página actual
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -46,6 +53,23 @@ const SliderVertical = ({ data }) => {
 
   return (
     <div className={sliderVertical}>
+      <div className={contendorBotones}>
+        <button
+          className={opcionSeleccionada === "puntosPago" ? seleccionado : ""}
+          onClick={() => handleSeleccionarOpcion("puntosPago")}
+        >
+          Puntos de pago
+        </button>
+        <button
+          className={
+            opcionSeleccionada === "retiroSubsidio" ? seleccionado : ""
+          }
+          onClick={() => handleSeleccionarOpcion("retiroSubsidio")}
+        >
+          Retiro Subsidios
+        </button>
+      </div>
+
       {currentPageData?.length > 0 ? (
         currentPageData?.map((item, index) => (
           <div className={card} key={index}>

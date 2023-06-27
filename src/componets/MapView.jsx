@@ -8,10 +8,15 @@ const MapView = () => {
   const { gridContainerMapa, ContenedorSlide, ContenedorMapa, mapa } = Classes;
   const position = [0, 0];
   const [datos, setDatos] = useState([]);
+   const [opcionSeleccionada, setOpcionSeleccionada] = useState("puntosPago");
 
-  const recibirDatos = (data) => {
+  const recibirDatos = (data,tipoBus) => {
     setDatos(data);
+
   };
+    const recibirOpcionSeleccionada = (opcion) => {
+      setOpcionSeleccionada(opcion);
+    };
   const [ubicacion, setUbicacion] = useState({
     latitude: 0,
     longitude: 0,
@@ -34,13 +39,20 @@ const MapView = () => {
   }, []);
 
   useEffect(() => {}, []);
+  const handleOpcionSeleccionada = (opcion) => {
+    // Aquí puedes hacer algo con el valor de la opción seleccionada
+    console.log(opcion);
+  };
 
   return (
     <div>
       {ubicacion.latitude != 0 && ubicacion.longitude != 0 ? (
         <div className={gridContainerMapa}>
           <div className={ContenedorSlide}>
-            <SliderVertical data={datos}></SliderVertical>
+            <SliderVertical
+              data={datos}
+              onOpcionSeleccionada={recibirOpcionSeleccionada}
+            ></SliderVertical>
           </div>
           <div className={ContenedorMapa}>
             <MapContainer
@@ -55,7 +67,11 @@ const MapView = () => {
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              <Markers datos={datos} enviarDatos={recibirDatos}></Markers>
+              <Markers
+                datos={datos}
+                enviarDatos={recibirDatos}
+                opcionSeleccionada={opcionSeleccionada}
+              ></Markers>
             </MapContainer>
           </div>
         </div>

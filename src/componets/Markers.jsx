@@ -4,9 +4,10 @@ import fetchData from "../utils/fetchData";
 import { Marker, Popup } from "react-leaflet";
 import { LogoLocalizacion } from "./LogoLocalizacion";
 
-
 const url = process.env.REACT_APP_URL_LOCALIZACION;
+const url2 = process.env.REACT_APP_BASE_API_CERT;
 const Markers = (props) => {
+  console.log("este es la opcion", props?.opcionSeleccionada);
   const [ubicacion, setUbicacion] = useState({
     longitude: 0,
     latitude: 0,
@@ -45,19 +46,36 @@ const Markers = (props) => {
   }, []);
 
   useEffect(() => {
-    props.enviarDatos(ubicacionCercana);
+    props?.enviarDatos(ubicacionCercana);
   }, [ubicacionCercana]);
 
   useEffect(() => {
-    if (ubicacion.latitude !== 0 && ubicacion.longitude !== 0) {
+    if (
+      ubicacion.latitude !== 0 &&
+      ubicacion.longitude !== 0 &&
+      props?.opcionSeleccionada === "retiroSubsidio"
+    ) {
       fetchData(
-        `${url}/rangos?longitud_inicio=${ubicacion.longitude}&latitud_inicio=${ubicacion.latitude}`,
+        `${url2}/img/rangos?longitud_inicio=${ubicacion?.longitude}&latitud_inicio=${ubicacion?.latitude}`,
         "GET"
       ).then((res) => {
-        setUbicacionCercana(res.obj.results);
+        console.log("img", res?.obj?.results);
+        setUbicacionCercana(res?.obj?.results);
+      });
+    } else if (
+      ubicacion.latitude !== 0 &&
+      ubicacion.longitude !== 0 &&
+      props?.opcionSeleccionada === "puntosPago"
+    ) {
+      fetchData(
+        `${url2}/rangos?longitud_inicio=${ubicacion?.longitude}&latitud_inicio=${ubicacion?.latitude}`,
+        "GET"
+      ).then((res) => {
+        console.log("rangos", res?.obj?.results);
+        setUbicacionCercana(res?.obj?.results);
       });
     }
-  }, [ubicacion]);
+  }, [ubicacion, props?.opcionSeleccionada]);
 
   return (
     <div>
@@ -65,8 +83,8 @@ const Markers = (props) => {
         <div>
           <Marker
             position={{
-              lat: ubicacion.latitude,
-              lng: ubicacion.longitude,
+              lat: ubicacion?.latitude,
+              lng: ubicacion?.longitude,
             }}
             draggable={true}
             icon={LogoHome}
@@ -76,7 +94,7 @@ const Markers = (props) => {
             <Popup>Tú estas aqui !!</Popup>
           </Marker>
           {ubicacionCercana &&
-            ubicacionCercana.map((comercio, i) => {
+            ubicacionCercana?.map((comercio, i) => {
               return (
                 <Marker
                   key={i}
