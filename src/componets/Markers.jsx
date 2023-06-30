@@ -6,7 +6,7 @@ import { LogoLocalizacion } from "./LogoLocalizacion";
 
 const url = process.env.REACT_APP_URL_LOCALIZACION;
 const Markers = (props) => {
-  console.log("este es la opcion", props?.opcionSeleccionada);
+  // console.log("este es la opcion", props?.opcionSeleccionada);
   const [ubicacion, setUbicacion] = useState({
     longitude: 0,
     latitude: 0,
@@ -58,7 +58,7 @@ const Markers = (props) => {
         `${url}/img/rangos?longitud_inicio=${ubicacion?.longitude}&latitud_inicio=${ubicacion?.latitude}`,
         "GET"
       ).then((res) => {
-        console.log("img", res?.obj?.results);
+        // console.log("img", res?.obj?.results);
         setUbicacionCercana(res?.obj?.results);
       });
     } else if (
@@ -70,7 +70,7 @@ const Markers = (props) => {
         `${url}/rangos?longitud_inicio=${ubicacion?.longitude}&latitud_inicio=${ubicacion?.latitude}`,
         "GET"
       ).then((res) => {
-        console.log("rangos", res?.obj?.results);
+        // console.log("rangos", res?.obj?.results);
         setUbicacionCercana(res?.obj?.results);
       });
     }
