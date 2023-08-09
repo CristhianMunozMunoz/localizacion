@@ -38,10 +38,10 @@ const MapView = () => {
   }, []);
 
   useEffect(() => {}, []);
-  const handleOpcionSeleccionada = (opcion) => {
-    // Aquí puedes hacer algo con el valor de la opción seleccionada
-    // console.log(opcion);
-  };
+  // const handleOpcionSeleccionada = (opcion) => {
+  //   // Aquí puedes hacer algo con el valor de la opción seleccionada
+  //   // console.log(opcion);
+  // };
 
   return (
     <div>
