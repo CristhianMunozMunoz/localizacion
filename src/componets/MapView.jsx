@@ -6,7 +6,7 @@ import SliderVertical from "./sliderVertical/SliderVertical";
 import Classes from "./MapViews.module.css";
 const MapView = () => {
   const { gridContainerMapa, ContenedorSlide, ContenedorMapa, mapa } = Classes;
-  const position = [0, 0];
+  // const position = [0, 0];
   const [datos, setDatos] = useState([]);
   const [opcionSeleccionada, setOpcionSeleccionada] = useState("puntosPago");
 
@@ -45,7 +45,7 @@ const MapView = () => {
 
   return (
     <div>
-      {ubicacion.latitude != 0 && ubicacion.longitude != 0 ? (
+      {ubicacion.latitude !== 0 && ubicacion.longitude !== 0 ? (
         <div className={gridContainerMapa}>
           <div className={ContenedorSlide}>
             <SliderVertical
