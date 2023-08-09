@@ -8,15 +8,14 @@ const MapView = () => {
   const { gridContainerMapa, ContenedorSlide, ContenedorMapa, mapa } = Classes;
   const position = [0, 0];
   const [datos, setDatos] = useState([]);
-   const [opcionSeleccionada, setOpcionSeleccionada] = useState("puntosPago");
+  const [opcionSeleccionada, setOpcionSeleccionada] = useState("puntosPago");
 
-  const recibirDatos = (data,tipoBus) => {
+  const recibirDatos = (data, tipoBus) => {
     setDatos(data);
-
   };
-    const recibirOpcionSeleccionada = (opcion) => {
-      setOpcionSeleccionada(opcion);
-    };
+  const recibirOpcionSeleccionada = (opcion) => {
+    setOpcionSeleccionada(opcion);
+  };
   const [ubicacion, setUbicacion] = useState({
     latitude: 0,
     longitude: 0,
@@ -41,7 +40,7 @@ const MapView = () => {
   useEffect(() => {}, []);
   const handleOpcionSeleccionada = (opcion) => {
     // Aquí puedes hacer algo con el valor de la opción seleccionada
-    console.log(opcion);
+    // console.log(opcion);
   };
 
   return (
