@@ -1,22 +1,27 @@
 import Classes from "./SliderVertical.module.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ContextoGeneral } from "../../contexto/GeneralContext";
+const {
+  cardInfo,
+  card,
+  sliderVertical,
+  image,
+  noDataMessage,
+  noDataImage,
+  pagination,
+  next,
+  prev,
+  numeroPaginacion,
+  world,
+  contendorBotones,
+  seleccionado,
+  google,
+  distanciaP,
+} = Classes;
 const SliderVertical = ({ data, onOpcionSeleccionada }) => {
+  const { ubicacionPuntero, setUbicacionPuntero } = useContext(ContextoGeneral);
   // import moverCursorImage from "../../assets/moverPuntos.png";
-  const {
-    cardInfo,
-    card,
-    sliderVertical,
-    image,
-    noDataMessage,
-    noDataImage,
-    pagination,
-    next,
-    prev,
-    numeroPaginacion,
-    world,
-    contendorBotones,
-    seleccionado,
-  } = Classes;
+  console.log("ubicacion punteroooo", ubicacionPuntero);
 
   const itemsPerPage = 3; // Número de comercios por página
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,6 +56,27 @@ const SliderVertical = ({ data, onOpcionSeleccionada }) => {
     }
   };
 
+  const openGoogleMaps = (destLat, destLng) => {
+    const origin = `${ubicacionPuntero.latitude},${ubicacionPuntero.longitude}`;
+    const destination = `${destLat},${destLng}`;
+    const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}`;
+    window.open(googleMapsUrl, "_blank");
+  };
+  const calcularDistancia = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; // Radio de la Tierra en kilómetros
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * (Math.PI / 180)) *
+        Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distancia = R * c; // Distancia en kilómetros
+    const distanciaEnMetros = distancia * 1000; // Convertir a metros
+    return distanciaEnMetros;
+  };
   return (
     <div className={sliderVertical}>
       <div className={contendorBotones}>
@@ -71,15 +97,41 @@ const SliderVertical = ({ data, onOpcionSeleccionada }) => {
       </div>
 
       {currentPageData?.length > 0 ? (
-        currentPageData?.map((item, index) => (
-          <div className={card} key={index}>
-            <div className={image}></div>
-            <div className={cardInfo}>
-              <h3>{item.comercio}</h3>
-              <p>{item.direccion}</p>
+        currentPageData?.map((item, index) => {
+          const distancia = calcularDistancia(
+            ubicacionPuntero.latitude,
+            ubicacionPuntero.longitude,
+            item["latitud_comercio"],
+            item["longitud_comercio"]
+          );
+          return (
+            <div className={card} key={index}>
+              <div className={image}></div>
+              <div className={cardInfo}>
+                <h3>{item.nombre_comercio}</h3>
+                <p>{item.direccion_comercio}</p>
+              </div>
+              <div
+                className={google}
+                title={"VER EN GOOGLE MAPS"}
+                onClick={() => {
+                  // console.log(
+                  //   "COORDENADAS",
+                  //   item["latitud_comercio"],
+                  //   item["longitud_comercio"]
+                  // );
+
+                  openGoogleMaps(
+                    item["latitud_comercio"],
+                    item["longitud_comercio"]
+                  );
+                }}
+              >
+                <p className={distanciaP}>{`${distancia.toFixed(2)}m`}</p>
+              </div>
             </div>
-          </div>
-        ))
+          );
+        })
       ) : (
         <div className={noDataMessage}>
           <h1>No hay puntos cercanos</h1>

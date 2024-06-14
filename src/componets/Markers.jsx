@@ -3,9 +3,14 @@ import { LogoHome } from "./LogoHome";
 import fetchData from "../utils/fetchData";
 import { Marker, Popup } from "react-leaflet";
 import { LogoLocalizacion } from "./LogoLocalizacion";
+import classes from "./Makers.module.css";
+import { useContext } from "react";
+import { ContextoGeneral } from "../contexto/GeneralContext";
 
+const { btnGoogle } = classes;
 const url = process.env.REACT_APP_URL_LOCALIZACION;
 const Markers = (props) => {
+  const { ubicacionPuntero, setUbicacionPuntero } = useContext(ContextoGeneral);
   // console.log("este es la opcion", props?.opcionSeleccionada);
   const [ubicacion, setUbicacion] = useState({
     longitude: 0,
@@ -22,6 +27,10 @@ const Markers = (props) => {
             longitude: marker.getLatLng().lng,
             latitude: marker.getLatLng().lat,
           });
+          setUbicacionPuntero({
+            longitude: marker.getLatLng().lng,
+            latitude: marker.getLatLng().lat,
+          });
         }
       },
     }),
@@ -31,6 +40,10 @@ const Markers = (props) => {
     navigator.geolocation.getCurrentPosition(
       function (position) {
         setUbicacion({
+          longitude: position.coords.longitude,
+          latitude: position.coords.latitude,
+        });
+        setUbicacionPuntero({
           longitude: position.coords.longitude,
           latitude: position.coords.latitude,
         });
@@ -76,6 +89,16 @@ const Markers = (props) => {
     }
   }, [ubicacion, props?.opcionSeleccionada]);
 
+  // const openGoogleMaps = (latitude, longitude) => {
+  //   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+  //   window.open(googleMapsUrl, "_blank");
+  // };
+  const openGoogleMaps = (destLat, destLng) => {
+    const origin = `${ubicacion.latitude},${ubicacion.longitude}`;
+    const destination = `${destLat},${destLng}`;
+    const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}`;
+    window.open(googleMapsUrl, "_blank");
+  };
   return (
     <div>
       {ubicacionCercana !== "" ? (
@@ -98,16 +121,28 @@ const Markers = (props) => {
                 <Marker
                   key={i}
                   position={{
-                    lat: comercio["latitud"],
-                    lng: comercio["longitud"],
+                    lat: comercio["latitud_comercio"],
+                    lng: comercio["longitud_comercio"],
                   }}
                   icon={LogoLocalizacion}
                 >
                   {" "}
                   <Popup>
-                    {comercio["comercio"]}
+                    {comercio["nombre_comercio"]}
                     <br />
-                    {comercio["direccion"]}
+                    {comercio["direccion_comercio"]}
+                    <br></br>
+                    <button
+                      className={btnGoogle}
+                      onClick={() =>
+                        openGoogleMaps(
+                          comercio["latitud_comercio"],
+                          comercio["longitud_comercio"]
+                        )
+                      }
+                    >
+                      VER EN GOOGLE MAPS
+                    </button>
                   </Popup>
                 </Marker>
               );
